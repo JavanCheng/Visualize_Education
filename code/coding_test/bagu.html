@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1. instanceof 操作符的实现
+        function myInstanceof(left, right) {
+            let proto = Object.getPrototypeOf(left);
+            let prototype = right.prototype;
+            while (true) {
+                if (!proto) return false;
+                if (proto = prototype) return true;
+                proto = Object.getPrototypeOf(proto);
+            }
+        }
+        console.log(myInstanceof(2, Number));
+        // 2. 归并排序
+        function mergeSort(arr) {  // 采用自上而下的递归方法
+            var len = arr.length;
+            if (len < 2) {
+                return arr;
+            }
+            var middle = Math.floor(len / 2),
+                left = arr.slice(0, middle),
+                right = arr.slice(middle);
+            return merge(mergeSort(left), mergeSort(right));
+        }
+
+        function merge(left, right) {
+            var result = [];
+
+            while (left.length && right.length) {
+                if (left[0] <= right[0]) {
+                    result.push(left.shift());
+                } else {
+                    result.push(right.shift());
+                }
+            }
+
+            while (left.length)
+                result.push(left.shift());
+
+            while (right.length)
+                result.push(right.shift());
+
+            return result;
+        }
+        console.log(mergeSort([3, 2, 1, 5, 6, 4]))
+        // 3. 快速排序
+        const partiton = (nums, left, right) => {
+            if (left === right) return left;
+            let pivot = nums[left];
+            let i = left, j = right + 1;
+            while (true) {
+                while (nums[++i] < pivot) {
+                    if (i === right) break;
+                }
+                while (nums[--j] > pivot) {
+                    if (j === left) break;
+                }
+                if (i >= j) break;
+                swap(nums, i, j);
+            }
+            swap(nums, j, left);
+            return j;
+        }
+        const swap = (nums, i, j) => {
+            let temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+        }
+        console.log('c'.charCodeAt() - 'a'.charCodeAt())
+        console.log('2' - '0')
+        console.log('2' + '0')
+    </script>
+</body>
+
+</html>

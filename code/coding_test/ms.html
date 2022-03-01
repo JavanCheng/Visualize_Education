@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function minVacation(A) {
+            // 用哈希表统计旅行地点数
+            const needs = new Map();
+            for (const a of A) {
+                needs.set(a, (needs.get(a) || 0) + 1);
+            }
+            const need = needs.size;
+
+            // 创建滑动窗口，左右指针，统计符合条件地点数，起始点，长度
+            const window = new Map();
+            let left = 0, right = 0;
+            let valid = 0;
+            let start = 0, len = A.length;
+            
+            // 窗口开始右滑动
+            while (right < A.length) {
+                let a = A[right];
+                right++;
+                // 如果这个地点第一次出现或者出现次数为0，则符合条件地点数 + 1
+                if (window.get(a) === undefined || window.get(a) === 0) {
+                    valid++;
+                }
+                window.set(a, (window.get(a) || 0) + 1);
+                // 当符合条件的地点数等于需要的地点数，开始移动左指针收缩窗口
+                while (valid === need) {
+                    // 更新长度
+                    if (right - left < len) {
+                        start = left;
+                        len = right - left;
+                    }
+                    let d = A[left];
+                    left++;
+                    // 当左指针滑动到左边最后一个不同地点处时，减少符合条件的地点
+                    if (window.get(d) === 1) {
+                        valid--;
+                    }
+                    window.set(d, window.get(d) - 1);
+                }
+            }
+            return len;
+        }
+        console.log(minVacation([2, 1, 1, 3, 2, 1, 1, 3]))
+        console.log(minVacation([7, 3, 7, 3, 1, 3, 4, 1]))
+    </script>
+</body>
+</html>

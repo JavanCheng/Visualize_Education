@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 二叉树根节点，输出层次遍历，每层一数组，z字形
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val);
+            this.left = (left === undefined ? null : left);
+            this.right = (right === undefined ? null : right);
+        }
+        function traverse(root) {
+            const res = [], queue = [];
+            queue.push(root);
+            while (queue.length) {
+                // res.push(queue);
+                const temp = [];
+                for (let i = 0; i < queue.length; i++) {
+                    temp.push(queue[i].val);
+                }
+                res.push(temp);
+
+                let len = queue.length;
+                while (len) {
+                    let node = queue.shift();
+                    if (node.left !== null) {
+                        queue.push(node.left);
+                    }
+                    if (node.right) {
+                        queue.push(node.right);
+                    }
+                    len--;
+                }
+            }
+
+            for (let i = 1; i < res.length; i += 2) {
+                res[i].reverse();
+            }
+            return res;
+        }
+        let node1 = new TreeNode(1, 2, 3);
+        console.log(traverse(tree));
+    </script>
+</body>
+
+</html>

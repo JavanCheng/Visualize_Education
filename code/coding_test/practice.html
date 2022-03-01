@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 0;
+            height: 0;
+            border-top: 50px solid red;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script>
+        const subArraySum = (nums, k) => {
+            let sum = 0, maxSum = 0, start = 0;
+            for (let i = 0; i < nums.length - k; i++) {
+                for (let j = i; j < i + k; j++) {
+                    sum += nums[j];
+                }
+                if (maxSum < sum) {
+                    maxSum = sum;
+                    start = i;
+                }
+                sum = 0;
+            }
+            return nums.slice(start, start + k);
+        }
+        console.log(subArraySum([1, 2, 3, 4, 5, 3, 4, 2, 1], 4))
+    </script>
+</body>
+
+</html>
